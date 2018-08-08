@@ -1,19 +1,20 @@
 #include "configuration_storage.h"
 
 ConfigurationStorage::ConfigurationStorage() {
-  EEPROM.begin(sizeof(struct LampConfig));
+  EEPROM.begin(sizeof(lamp_config_t));
   EEPROM.get(this->_eeprom_addr, this->_config);
 
   if(this->_config.valid_config != this->_default_config.valid_config) {
-    this->StoreConfig(const_cast<LampConfig*>(&this->_default_config));
+    this->_config = this->_default_config;
+    this->StoreConfig(&this->_config);
   }
 }
 
-LampConfig ConfigurationStorage::GetStoredConfig() {
+lamp_config_t ConfigurationStorage::GetStoredConfig() {
   return _config;
 }
 
-void ConfigurationStorage::StoreConfig(LampConfig* config) {
+void ConfigurationStorage::StoreConfig(lamp_config_t* config) {
   this->_config = *config;
   EEPROM.put(this->_eeprom_addr, this->_config);
   EEPROM.commit();

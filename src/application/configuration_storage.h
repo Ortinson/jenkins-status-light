@@ -7,14 +7,14 @@
 class ConfigurationStorage {
 public:
   ConfigurationStorage(void);
-  LampConfig GetStoredConfig(void);
-  void StoreConfig(LampConfig* config);
+  lamp_config_t GetStoredConfig(void);
+  void StoreConfig(lamp_config_t* config);
   void SubscribeToConfigChange(void (*callback)(void));
 
 private:
   static const int _eeprom_addr = 0;
   // TODO set to progmem
-  const LampConfig _default_config = {
+  const lamp_config_t _default_config = {
     .build_ok = {{{0, 254, 0}}, animation_t::Pulse, 5},
     .build_err = {{{254, 0, 0}}, animation_t::Pulse, 1},
     .build_running = {{{254, 254, 0}}, animation_t::Pulse, 5},
@@ -28,7 +28,7 @@ private:
     .device_name = "Jenkins Status Light",
     .valid_config = 0xDEADBEEE
   };
-  LampConfig _config;
+  lamp_config_t _config;
   void (*_callback)(void);
 
 };

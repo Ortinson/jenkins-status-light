@@ -23,7 +23,7 @@ struct Notification {
     uint32_t cadency;
 };
 
-struct LampConfig {
+typedef struct{
   Notification build_ok;
   Notification build_err;
   Notification build_running;
@@ -36,6 +36,6 @@ struct LampConfig {
   char uri[256];
   char device_name[128];
   uint32_t valid_config;
-};
+} lamp_config_t;
 
 #endif
