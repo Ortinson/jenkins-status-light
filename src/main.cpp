@@ -7,12 +7,14 @@
 #include "application/configuration_storage.h"
 #include "application/configuration_server.h"
 
+ConfigurationStorage* storage;
+ConfigurationServer* server;
 void setup() {
     Serial.begin(115200);
     delay(3000);
     Serial.println("starting setup");
-    ConfigurationStorage* storage = new ConfigurationStorage();
-    ConfigurationServer* server = new ConfigurationServer(storage);
+    storage = new ConfigurationStorage();
+    server = new ConfigurationServer(storage);
     // Initialize ConfigurationServer
     // Initialize LEDDriver
     // Initialize JenkinsMonitor
@@ -29,6 +31,7 @@ void loop() {
 
   while(true){
     Serial.println("caca");
+    server->handleClient();
     delay(1000);
   }
     // put your main code here, to run repeatedly:
