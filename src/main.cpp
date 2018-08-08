@@ -5,12 +5,14 @@
 #include <ESP8266WebServer.h>
 #include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
 #include "application/configuration_storage.h"
+#include "application/configuration_server.h"
 
 void setup() {
     Serial.begin(115200);
     delay(3000);
     Serial.println("starting setup");
     ConfigurationStorage storage = ConfigurationStorage();
+    ConfigurationServer server = ConfigurationServer(&storage);
     // Initialize ConfigurationServer
     // Initialize LEDDriver
     // Initialize JenkinsMonitor

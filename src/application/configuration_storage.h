@@ -9,6 +9,7 @@ public:
   ConfigurationStorage(void);
   LampConfig GetStoredConfig(void);
   void StoreConfig(LampConfig* config);
+  void SubscribeToConfigChange(void (*callback)(void));
 
 private:
   static const int _eeprom_addr = 0;
@@ -28,6 +29,7 @@ private:
     .valid_config = 0xDEADBEEE
   };
   LampConfig _config;
+  void (*_callback)(void);
 
 };
 

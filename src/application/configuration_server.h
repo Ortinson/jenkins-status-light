@@ -7,11 +7,11 @@
 class ConfigurationServer {
 public:
   ConfigurationServer(ConfigurationStorage* storage);
-  // void SubscribeToConfigChange();
 
 private:
   char _uri[256];
   ConfigurationStorage* _storage;
+  LampConfig _config;
 };
 
 #endif // APPLICATION_CONFIGURATION_SERVER_H_

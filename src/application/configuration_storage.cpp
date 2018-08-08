@@ -1,7 +1,6 @@
 #include "configuration_storage.h"
 
 ConfigurationStorage::ConfigurationStorage() {
-  Serial.println("Getting EEPROM config");
   EEPROM.begin(sizeof(struct LampConfig));
   EEPROM.get(this->_eeprom_addr, this->_config);
 
@@ -18,4 +17,11 @@ void ConfigurationStorage::StoreConfig(LampConfig* config) {
   this->_config = *config;
   EEPROM.put(this->_eeprom_addr, this->_config);
   EEPROM.commit();
+  if(this->_callback) {
+    this->_callback();
+  }
+}
+
+void ConfigurationStorage::SubscribeToConfigChange(void (*callback)()) {
+  this->_callback = callback;
 }
