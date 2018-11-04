@@ -18,6 +18,7 @@ private:
     .build_ok = {{{0, 254, 0}}, animation_t::Pulse, 5},
     .build_err = {{{254, 0, 0}}, animation_t::Pulse, 1},
     .build_running = {{{254, 254, 0}}, animation_t::Pulse, 5},
+    .build_not_found = {{{254, 254, 0}}, animation_t::Pulse, 5},
     .server_down = {{{254, 0, 254}}, animation_t::Pulse, 1},
     .internet_down = {{{0, 0, 254}}, animation_t::Pulse, 5},
     .wifi_down = {{{0, 0, 254}}, animation_t::Pulse, 5},

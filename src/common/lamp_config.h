@@ -27,6 +27,7 @@ typedef struct{
   Notification build_ok;
   Notification build_err;
   Notification build_running;
+  Notification build_not_found;
   Notification server_down;
   Notification internet_down;
   Notification wifi_down;
