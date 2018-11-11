@@ -20,18 +20,26 @@ void setup() {
     // TODO(Ortinson): Setup led driver and set it to notify connection mode
 
 
+    const char* ssid = "SSID";
+    const char* password = "PASS";
     // TODO(Ortinson): find a way to manage wifi connection that is compatible
     //   with 'ESP async web server'    // WiFiManager wifiManager;
     // wifiManager.autoConnect(storage->GetStoredConfig().device_name);
-    // Serial.println("connected...yeey :)");
 
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+      delay(1000);
+      Serial.println("Connecting to WiFi..");
+    }
+
+    Serial.println("connected...yeey :)");
     // Start jenkins monitor
 }
 
 void loop() {
-
+  size_t i = 0;
   while(true){
-    Serial.println("caca");
+    Serial.printf("%d\n",++i);
     delay(1000);
   }
     // put your main code here, to run repeatedly:

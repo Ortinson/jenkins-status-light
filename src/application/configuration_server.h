@@ -14,6 +14,10 @@ public:
 private:
   ConfigurationStorage* _storage;
   lamp_config_t _config;
+  AsyncWebServer* _server;
+
+  void setURIS();
+  void start();
 };
 
 #endif // APPLICATION_CONFIGURATION_SERVER_H_
