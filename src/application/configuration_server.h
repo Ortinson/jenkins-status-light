@@ -1,7 +1,7 @@
 #ifndef APPLICATION_CONFIGURATION_SERVER_H_
 #define APPLICATION_CONFIGURATION_SERVER_H_
 
-#include <ESPAsyncWebServer.h>
+#include <ESPAsyncWebServer.h>  // https://github.com/me-no-dev/ESPAsyncWebServer
 #include <SPIFFSEditor.h>
 
 #include "configuration_storage.h"
@@ -10,14 +10,17 @@
 class ConfigurationServer {
 public:
   ConfigurationServer(ConfigurationStorage* storage);
+  void start();
 
 private:
   ConfigurationStorage* _storage;
   lamp_config_t _config;
   AsyncWebServer* _server;
-
+  
+  void SendIndex(AsyncWebServerRequest *request);
+  void UpdateConfig(AsyncWebServerRequest *request);
+  String IndexTemplateProcessor(const String& var);
   void setURIS();
-  void start();
 };
 
 #endif // APPLICATION_CONFIGURATION_SERVER_H_

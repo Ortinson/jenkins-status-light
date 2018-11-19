@@ -2,18 +2,22 @@
 #define APPLICATION_CONFIGURATION_STORAGE_H_
 
 #include "common/lamp_config.h"
+#include <string>
 #include <EEPROM.h>
-
 class ConfigurationStorage {
 public:
   ConfigurationStorage(void);
   lamp_config_t GetStoredConfig(void);
   void StoreConfig(lamp_config_t* config);
   void SubscribeToConfigChange(void (*callback)(void));
-
+  void SetMonitorPeriod(String conf);
+  void SetBuildPeriod(String conf);
+  void SetJenkinsPassword(String conf);
+  void SetUri(String conf);
+  void SetDeviceName(String conf);
 private:
   static const int _eeprom_addr = 0;
-  // TODO set to progmem
+  // TODO(Ortinson): set to progmem
   const lamp_config_t _default_config = {
     .build_ok = {{{0, 254, 0}}, animation_t::Pulse, 5},
     .build_err = {{{254, 0, 0}}, animation_t::Pulse, 1},
@@ -27,7 +31,7 @@ private:
     .jenkins_password = "",
     .uri = "",
     .device_name = "Jenkins Status Light",
-    .valid_config = 0xDEADBEEE
+    .valid_config = 0xDEADBEEF
   };
   lamp_config_t _config;
   void (*_callback)(void);

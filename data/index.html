@@ -1,6 +1,21 @@
+<!DOCTYPE html>
 <html>
-<header><title>This is title</title></header>
+<head>
+  <title>ESP32 Web Server</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
 <body>
-Hello world
+  <h1>%DEV_NAME%</h1>
+  <p>GPIO state: <strong> %STATE%</strong></p>
+  <form method='POST' action="/">
+    Device name: <input type="text" name="dev_name" value="%DEV_NAME%"> <br>
+    Monitor Period (seconds): <input type="number" name="monitor_period" value="%MONITOR_PERIOD%"><br>
+    Build Period (seconds): <input type="number" name="build_period" value="%BUILD_PERIOD%"><br>
+    Password: <input type="text" name="password"> <br>
+    URI to check: <input type="text" name="uri", value="%URI%"> <br>
+    <input type="submit" value="Submit">
+  </form>
 </body>
 </html>

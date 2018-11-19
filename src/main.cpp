@@ -11,7 +11,7 @@
 ConfigurationStorage* storage;
 ConfigurationServer* server;
 void setup() {
-    Serial.begin(115200);
+    Serial.begin(9600);
     Serial.println("starting setup");
     storage = new ConfigurationStorage();
     server = new ConfigurationServer(storage);
@@ -20,8 +20,8 @@ void setup() {
     // TODO(Ortinson): Setup led driver and set it to notify connection mode
 
 
-    const char* ssid = "SSID";
-    const char* password = "PASS";
+    const char* ssid = "ORPA_CH6_3";
+    const char* password = "Alcornoque22";
     // TODO(Ortinson): find a way to manage wifi connection that is compatible
     //   with 'ESP async web server'    // WiFiManager wifiManager;
     // wifiManager.autoConnect(storage->GetStoredConfig().device_name);
@@ -29,11 +29,14 @@ void setup() {
     WiFi.begin(ssid, password);
     while (WiFi.status() != WL_CONNECTED) {
       delay(1000);
-      Serial.println("Connecting to WiFi..");
+      Serial.printf("Connecting to WiFi. Status: %d\n", WiFi.status());
     }
 
-    Serial.println("connected...yeey :)");
-    // Start jenkins monitor
+    Serial.printf("connected. IP: %s", WiFi.localIP().toString().c_str());
+
+    // Start configuratin server
+    server->start();
+    // TODO(Ortinson): Start jenkins monitor
 }
 
 void loop() {
