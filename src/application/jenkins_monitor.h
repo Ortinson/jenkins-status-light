@@ -3,13 +3,16 @@
 
 #include <ArduinoJson.h>
 #include "configuration_storage.h"
-#include "drivers/LED_driver.h"
 
 class JenkinsMonitor {
 public:
   JenkinsMonitor(ConfigurationStorage* configStorage);
+  void Start();
+  void OnConfigUpdate();
 
 private:
+  void Monitor();
+  int GetBranchStatus();
   ConfigurationStorage* _config_storage;
 };
 

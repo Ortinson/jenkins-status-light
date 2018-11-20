@@ -7,21 +7,23 @@
 
 #include "application/configuration_storage.h"
 #include "application/configuration_server.h"
+#include "application/jenkins_monitor.h"
+#include "application/LED_notifier.h"
 
 ConfigurationStorage* storage;
 ConfigurationServer* server;
+JenkinsMonitor* monitor;
 void setup() {
     Serial.begin(9600);
     Serial.println("starting setup");
     storage = new ConfigurationStorage();
     server = new ConfigurationServer(storage);
-    // TODO(Ortinson): Initialize LEDDriver
-    // TODO(Ortinson): Initialize JenkinsMonitor
-    // TODO(Ortinson): Setup led driver and set it to notify connection mode
+    monitor = new JenkinsMonitor(storage); // TODO(Ortinson): Initialize JenkinsMonitor
+    // TODO(Ortinson): Initialize LEDNotifier
 
 
-    const char* ssid = "ORPA_CH6_3";
-    const char* password = "Alcornoque22";
+    const char* ssid = "ShittyFIWifi";
+    const char* password = "Pokemon2";
     // TODO(Ortinson): find a way to manage wifi connection that is compatible
     //   with 'ESP async web server'    // WiFiManager wifiManager;
     // wifiManager.autoConnect(storage->GetStoredConfig().device_name);
@@ -34,9 +36,8 @@ void setup() {
 
     Serial.printf("connected. IP: %s", WiFi.localIP().toString().c_str());
 
-    // Start configuratin server
-    server->start();
-    // TODO(Ortinson): Start jenkins monitor
+    server->Start();
+    monitor->Start();
 }
 
 void loop() {

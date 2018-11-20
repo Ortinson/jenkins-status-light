@@ -9,7 +9,7 @@ public:
   ConfigurationStorage(void);
   lamp_config_t GetStoredConfig(void);
   void StoreConfig(lamp_config_t* config);
-  void SubscribeToConfigChange(void (*callback)(void));
+  void SubscribeToConfigChange(std::function<void(void)> callback);
   void SetMonitorPeriod(String conf);
   void SetBuildPeriod(String conf);
   void SetJenkinsPassword(String conf);
@@ -17,7 +17,7 @@ public:
   void SetDeviceName(String conf);
 private:
   static const int _eeprom_addr = 0;
-  // TODO(Ortinson): set to progmem
+  // TODO(Ortinson): Move to confifg file (SPIFFS).
   const lamp_config_t _default_config = {
     .build_ok = {{{0, 254, 0}}, animation_t::Pulse, 5},
     .build_err = {{{254, 0, 0}}, animation_t::Pulse, 1},
@@ -34,7 +34,7 @@ private:
     .valid_config = 0xDEADBEEF
   };
   lamp_config_t _config;
-  void (*_callback)(void);
+  std::function<void(void)> _callback = NULL;
 
 };
 

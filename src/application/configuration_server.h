@@ -10,7 +10,7 @@
 class ConfigurationServer {
 public:
   ConfigurationServer(ConfigurationStorage* storage);
-  void start();
+  void Start();
 
 private:
   ConfigurationStorage* _storage;

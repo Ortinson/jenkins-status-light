@@ -29,17 +29,21 @@ void ConfigurationStorage::SetDeviceName(String conf) {
 }
 void ConfigurationStorage::SetMonitorPeriod(String conf) {
   this->_config.monitor_period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
 }
 void ConfigurationStorage::SetBuildPeriod(String conf) {
   this->_config.build_period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
 }
 void ConfigurationStorage::SetJenkinsPassword(String conf) {
   conf.toCharArray(static_cast<char*>(this->_config.jenkins_password), sizeof(this->_config.jenkins_password));
+  this->StoreConfig(&this->_config);
 }
 void ConfigurationStorage::SetUri(String conf) {
   conf.toCharArray(static_cast<char*>(this->_config.uri), sizeof(this->_config.uri));
+  this->StoreConfig(&this->_config);
 }
 
-void ConfigurationStorage::SubscribeToConfigChange(void (*callback)()) {
+void ConfigurationStorage::SubscribeToConfigChange(std::function<void(void)> callback) {
   this->_callback = callback;
 }
