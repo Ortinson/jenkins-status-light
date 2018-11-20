@@ -13,6 +13,14 @@ typedef enum  {
     Rainbow,
 } animation_t;
 
+typedef enum  {
+    RUNNING,
+    SUCCESS,
+    FAILURE,
+    SERVER_ERROR,
+
+} jenkins_status_t;
+
 struct Color {
   uint8_t red, green, blue;
 };
@@ -33,6 +41,7 @@ typedef struct{
   Notification wifi_down;
   uint32_t monitor_period;
   uint32_t build_period;
+  char jenkins_user[256];
   char jenkins_password[256];
   char uri[256];
   char device_name[128];

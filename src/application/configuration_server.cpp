@@ -42,10 +42,16 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
     param = request->getParam("build_period", true)->value();
     this->_storage->SetBuildPeriod(param);
   }
+  if (request->hasParam("user", true)) {
+    Serial.printf("User\n");
+    param = request->getParam("user", true)->value();
+    if (param)
+      this->_storage->SetJenkinsUser(param);
+  }
   if (request->hasParam("password", true)) {
     Serial.printf("password\n");
     param = request->getParam("password", true)->value();
-    if (param)
+    if (param.length() != 0)
       this->_storage->SetJenkinsPassword(param);
   }
   if (request->hasParam("uri", true)) {
@@ -56,8 +62,6 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
   
   this->_config = this->_storage->GetStoredConfig();
   this->SendIndex(request);
-  //request->send(200, "text/plain", "Hello, POST: " + message);
-  // request->send(SPIFFS, "/index.html", String(), false, std::bind(&ConfigurationServer::IndexTemplateProcessor, this, std::placeholders::_1));
 }
 
 String ConfigurationServer::IndexTemplateProcessor(const String& var) {
@@ -71,6 +75,8 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
     return String(this->_config.build_period);
   if(var == "URI")
     return String(this->_config.uri);
+  if(var == "USER")
+    return String(this->_config.jenkins_user);
   return String();
 }
 

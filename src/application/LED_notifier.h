@@ -2,6 +2,7 @@
 #define LED_NOTIFIER_H_
 
 #include <stdint.h>
+#include "common/lamp_config.h"
 // #include fastled
 
 // TODO (Ortinson): Define notification interface based on this driver.
@@ -11,7 +12,7 @@
 class LEDNotifier {
 public:
   LEDNotifier(uint32_t data_pin, uint32_t led_number);
-  void Notify();  //TODO (Ortinson)
+  void Notify(jenkins_status_t status);  //TODO (Ortinson)
 
 private:
   uint32_t _data_pin;

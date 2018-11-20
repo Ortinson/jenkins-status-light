@@ -5,4 +5,7 @@ _data_pin(data_pin), _led_number(led_number) {
 
 }
 
-void LEDNotifier::Notify(){}
+void LEDNotifier::Notify(jenkins_status_t status){
+    //switch(status)
+
+}

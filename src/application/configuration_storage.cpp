@@ -39,6 +39,10 @@ void ConfigurationStorage::SetJenkinsPassword(String conf) {
   conf.toCharArray(static_cast<char*>(this->_config.jenkins_password), sizeof(this->_config.jenkins_password));
   this->StoreConfig(&this->_config);
 }
+void ConfigurationStorage::SetJenkinsUser(String conf) {
+  conf.toCharArray(static_cast<char*>(this->_config.jenkins_user), sizeof(this->_config.jenkins_user));
+  this->StoreConfig(&this->_config);
+}
 void ConfigurationStorage::SetUri(String conf) {
   conf.toCharArray(static_cast<char*>(this->_config.uri), sizeof(this->_config.uri));
   this->StoreConfig(&this->_config);

@@ -12,6 +12,7 @@ public:
   void SubscribeToConfigChange(std::function<void(void)> callback);
   void SetMonitorPeriod(String conf);
   void SetBuildPeriod(String conf);
+  void SetJenkinsUser(String conf);
   void SetJenkinsPassword(String conf);
   void SetUri(String conf);
   void SetDeviceName(String conf);
@@ -28,6 +29,7 @@ private:
     .wifi_down = {{{0, 0, 254}}, animation_t::Pulse, 5},
     .monitor_period = 60,
     .build_period = 10,
+    .jenkins_user = "",
     .jenkins_password = "",
     .uri = "",
     .device_name = "Jenkins Status Light",
