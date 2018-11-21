@@ -4,10 +4,10 @@ ConfigurationStorage::ConfigurationStorage() {
   EEPROM.begin(sizeof(lamp_config_t));
   EEPROM.get(this->_eeprom_addr, this->_config);
 
-  // if(this->_config.valid_config != this->_default_config.valid_config) {
-  //   this->_config = this->_default_config;
-  //   this->StoreConfig(&this->_config);
-  // }
+  if(this->_config.valid_config != this->_default_config.valid_config) {
+    this->_config = this->_default_config;
+    this->StoreConfig(&this->_config);
+  }
 }
 
 lamp_config_t ConfigurationStorage::GetStoredConfig() {

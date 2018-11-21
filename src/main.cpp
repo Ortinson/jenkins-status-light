@@ -19,11 +19,11 @@ void setup() {
     Serial.println("starting setup");
     storage = new ConfigurationStorage();
     server = new ConfigurationServer(storage);
-    notifier = new LEDNotifier(1,1);
-    monitor = new JenkinsMonitor(storage, notifier);
+    notifier = new LEDNotifier();
+    monitor = new JenkinsMonitor(storage, notifier, 10); //TODO(Ortinson): fetch period from configuration server
 
-    const char* ssid = "ORPA_CH6_3";
-    const char* password = "Alcornoque22";
+    const char* ssid = "ssid";
+    const char* password = "password";
     // TODO(Ortinson): find a way to manage wifi connection that is compatible
     //   with 'ESP async web server'    // WiFiManager wifiManager;
     // wifiManager.autoConnect(storage->GetStoredConfig().device_name);
@@ -40,11 +40,17 @@ void setup() {
 }
 
 void loop() {
-  size_t i = 0;
   monitor->Monitor();
-
+  unsigned long monitor_period = 10000;
+  unsigned long next_trigger = millis() + monitor_period;
+  unsigned long t;
   while(true){
-    Serial.printf("%d\n",++i);
-    delay(1000);
+    notifier->Cycle();
+    t = millis();
+    if (t > next_trigger){
+      next_trigger = t + monitor_period;
+      monitor->Monitor();
+    }
+    delay(10);  // TODO(Ortinson): Investigate why watchdog barks if no delay()  
   }
 }

@@ -1,28 +1,39 @@
 #include "jenkins_monitor.h"
 
-JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier* notifier) :
+JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier* notifier, uint period) :
     _config_storage(config_storage),
-    _notifier(notifier){
+    _notifier(notifier),
+    _period(period){
   this->_config_storage->SubscribeToConfigChange(std::bind(&JenkinsMonitor::OnConfigUpdate, this));
+}
+
+void JenkinsMonitor::Start() {
+  // this->_myTicker.attach(this->_period, std::bind(&JenkinsMonitor::Monitor, this));  // TODO(Ortinson): Use timer to trigger Monitor()
+}
+
+void JenkinsMonitor::Stop() {
+  // TODO(Ortinson): Use timer to trigger Monitor()
 }
 
 void JenkinsMonitor::OnConfigUpdate(){
   Serial.println("Monitor callback called!!!!");
+  // this->Monitor();
 }
 
 void JenkinsMonitor::Monitor(){
-  jenkins_status_t status = this->GetBranchStatus();
-  this->_notifier->Notify(status);
+  lamp_config_t config = this->_config_storage->GetStoredConfig();
+  jenkins_status_t status = this->GetJenkinsStatus();
+  this->_notifier->Notify(config, status);
 }
 
-jenkins_status_t JenkinsMonitor::GetBranchStatus() {
+jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
   lamp_config_t config = this->_config_storage->GetStoredConfig();
   this->_http.begin(this->_client, config.uri);
   this->_http.setAuthorization(config.jenkins_user, config.jenkins_password);  //TODO get authorization from config
   
   int httpCode = this->_http.GET();
   Serial.printf("[HTTP] GET... code: %d\n", httpCode);
-  if (httpCode == HTTP_CODE_OK) {
+  if (httpCode != HTTP_CODE_OK) {
     this->_http.end();
     return SERVER_ERROR;
   }
@@ -50,11 +61,11 @@ jenkins_status_t JenkinsMonitor::ParseResponse(const String response){
 
   String building = root["building"].as<String>();
   String result = root["result"].as<String>();
-  if (building = "true"){
+  if (building == "true"){
     return RUNNING;
-  }else if (result = "SUCCESS") {
+  }else if (result == "SUCCESS") {
     return SUCCESS;
-  }else if (result = "FAILURE") {
+  }else if (result == "FAILURE") {
     return FAILURE;
   }
   return SERVER_ERROR;
