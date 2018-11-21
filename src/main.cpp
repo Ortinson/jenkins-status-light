@@ -41,13 +41,14 @@ void setup() {
 
 void loop() {
   monitor->Monitor();
-  unsigned long monitor_period = 10000;
+  unsigned long monitor_period = storage->GetStoredConfig().monitor_period * 1000;
   unsigned long next_trigger = millis() + monitor_period;
   unsigned long t;
   while(true){
     notifier->Cycle();
     t = millis();
     if (t > next_trigger){
+      Serial.println("going to monitor");
       next_trigger = t + monitor_period;
       monitor->Monitor();
     }

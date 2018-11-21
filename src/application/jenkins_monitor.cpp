@@ -17,7 +17,7 @@ void JenkinsMonitor::Stop() {
 
 void JenkinsMonitor::OnConfigUpdate(){
   Serial.println("Monitor callback called!!!!");
-  // this->Monitor();
+  this->Monitor();
 }
 
 void JenkinsMonitor::Monitor(){
