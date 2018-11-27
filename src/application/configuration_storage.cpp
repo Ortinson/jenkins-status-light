@@ -5,6 +5,7 @@ ConfigurationStorage::ConfigurationStorage() {
   EEPROM.get(this->_eeprom_addr, this->_config);
 
   if(this->_config.valid_config != this->_default_config.valid_config) {
+    Serial.println("Updating config to flash");
     this->_config = this->_default_config;
     this->StoreConfig(&this->_config);
   }
@@ -19,7 +20,7 @@ void ConfigurationStorage::StoreConfig(lamp_config_t* config) {
   EEPROM.put(this->_eeprom_addr, this->_config);
   EEPROM.commit();
   if(this->_callback) {
-    this->_callback();
+    //this->_callback(); //TODO(Ortinson): Device crashes. Use other method to notify callback
   }
 }
 

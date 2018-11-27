@@ -20,11 +20,11 @@ private:
   static const int _eeprom_addr = 0;
   // TODO(Ortinson): Move to confifg file (SPIFFS).
   const lamp_config_t _default_config = {
-    .build_ok = {{(uint8_t)254, (uint8_t)0, (uint8_t)0}, animation_t::Pulse, (uint32_t)10},
-    .build_err = {{(uint8_t)254, (uint8_t)0, (uint8_t)0}, animation_t::Pulse, (uint32_t)1},
-    .build_running = {{(uint8_t)254, (uint8_t)254, (uint8_t)0}, animation_t::Pulse, (uint32_t)5},
-    .build_not_found = {{(uint8_t)254, (uint8_t)0, (uint8_t)254}, animation_t::Pulse, (uint32_t)5},
-    .server_down = {{(uint8_t)254, (uint8_t)0, (uint8_t)254}, animation_t::Pulse, (uint32_t)1},
+    .build_ok = {{(uint8_t)0, (uint8_t)255, (uint8_t)0}, animation_t::Pulse, (uint32_t)10},
+    .build_err = {{(uint8_t)255, (uint8_t)0, (uint8_t)0}, animation_t::Pulse, (uint32_t)3},
+    .build_running = {{(uint8_t)255, (uint8_t)255, (uint8_t)0}, animation_t::Pulse, (uint32_t)5},
+    .build_not_found = {{(uint8_t)255, (uint8_t)0, (uint8_t)255}, animation_t::Pulse, (uint32_t)5},
+    .server_down = {{(uint8_t)255, (uint8_t)0, (uint8_t)255}, animation_t::Pulse, (uint32_t)1},
     .monitor_period = (uint32_t)60,
     .build_period = (uint32_t)10,
     .jenkins_user = "",
