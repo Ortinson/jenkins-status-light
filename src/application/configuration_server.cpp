@@ -60,7 +60,6 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
     this->_storage->SetUri(param);
   }
   
-  this->_config = this->_storage->GetStoredConfig();
   this->SendIndex(request);
 }
 
@@ -68,15 +67,15 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
   if(var == "STATE")
     return String("Hello World!!!");
   if(var == "DEV_NAME")
-    return String(this->_config.device_name);
+    return String(this->_config->device_name);
   if(var == "MONITOR_PERIOD")
-    return String(this->_config.monitor_period);
+    return String(this->_config->monitor_period);
   if(var == "BUILD_PERIOD")
-    return String(this->_config.build_period);
+    return String(this->_config->build_period);
   if(var == "URI")
-    return String(this->_config.uri);
+    return String(this->_config->uri);
   if(var == "USER")
-    return String(this->_config.jenkins_user);
+    return String(this->_config->jenkins_user);
   return String();
 }
 

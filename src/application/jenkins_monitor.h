@@ -22,6 +22,7 @@ private:
   void OnConfigUpdate();
   jenkins_status_t GetJenkinsStatus();
   jenkins_status_t ParseResponse(const String response);
+  lamp_config_t* _config;
   ConfigurationStorage* _config_storage;
   LEDNotifier* _notifier;
   WiFiClient _client;

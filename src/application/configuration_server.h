@@ -14,7 +14,7 @@ public:
 
 private:
   ConfigurationStorage* _storage;
-  lamp_config_t _config;
+  lamp_config_t* _config;
   AsyncWebServer* _server;
   
   void SendIndex(AsyncWebServerRequest *request);

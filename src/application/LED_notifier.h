@@ -14,7 +14,7 @@
 class LEDNotifier {
 public:
   LEDNotifier();
-  void Notify(lamp_config_t config, jenkins_status_t status);  //TODO (Ortinson)
+  void Notify(lamp_config_t* config, jenkins_status_t status);
   void Cycle();
 
 private:

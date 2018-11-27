@@ -4,6 +4,7 @@ JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier
     _config_storage(config_storage),
     _notifier(notifier),
     _period(period){
+  this->_config = this->_config_storage->GetStoredConfig();
   this->_config_storage->SubscribeToConfigChange(std::bind(&JenkinsMonitor::OnConfigUpdate, this));
 }
 
@@ -21,15 +22,13 @@ void JenkinsMonitor::OnConfigUpdate(){
 }
 
 void JenkinsMonitor::Monitor(){
-  lamp_config_t config = this->_config_storage->GetStoredConfig();
   jenkins_status_t status = this->GetJenkinsStatus();
-  this->_notifier->Notify(config, status);
+  this->_notifier->Notify(this->_config, status);
 }
 
 jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
-  lamp_config_t config = this->_config_storage->GetStoredConfig();
-  this->_http.begin(this->_client, config.uri);
-  this->_http.setAuthorization(config.jenkins_user, config.jenkins_password);  //TODO get authorization from config
+  this->_http.begin(this->_config->uri);
+  this->_http.setAuthorization(this->_config->jenkins_user, this->_config->jenkins_password);  //TODO get authorization from config
   
   int httpCode = this->_http.GET();
   Serial.printf("[HTTP] GET... code: %d\n", httpCode);
@@ -53,19 +52,23 @@ jenkins_status_t JenkinsMonitor::ParseResponse(const String response){
     return SERVER_ERROR;
   }
   // Print values  // TODO(Ortinson): Remove
-  Serial.println(F("Response:"));
-  Serial.println(root["building"].as<char*>());
-  Serial.println(root["result"].as<char*>());
-  Serial.println(root["culprits"][0]["absoluteUrl"].as<char*>());
-  Serial.println(root["culprits"][0]["fullName"].as<char*>());
+  //         Serial.println(response);
+  // Serial.println(F("Response:"));
+  // Serial.println(root["building"].as<char*>());
+  // Serial.println(root["result"].as<char*>());
+  // Serial.println(root["culprits"][0]["absoluteUrl"].as<char*>());
+  // Serial.println(root["culprits"][0]["fullName"].as<char*>());
 
   String building = root["building"].as<String>();
   String result = root["result"].as<String>();
   if (building == "true"){
+    Serial.println("Build is running.");
     return RUNNING;
   }else if (result == "SUCCESS") {
+    Serial.println("Build Successful.");
     return SUCCESS;
   }else if (result == "FAILURE") {
+    Serial.println("Build failed.");
     return FAILURE;
   }
   return SERVER_ERROR;

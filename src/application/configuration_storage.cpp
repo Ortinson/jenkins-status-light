@@ -10,8 +10,8 @@ ConfigurationStorage::ConfigurationStorage() {
   }
 }
 
-lamp_config_t ConfigurationStorage::GetStoredConfig() {
-  return _config;
+lamp_config_t* ConfigurationStorage::GetStoredConfig() {
+  return &_config;
 }
 
 void ConfigurationStorage::StoreConfig(lamp_config_t* config) {

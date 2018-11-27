@@ -5,26 +5,25 @@ LEDNotifier::LEDNotifier(){
 }
 
 // Todo(Ortinson): select function to call based on config file
-void LEDNotifier::Notify(lamp_config_t config, jenkins_status_t status){
-    Serial.printf("Status: %d", status);
+void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
     switch(status){
         case RUNNING:
-            this->_animation_color = config.build_running.color;
-            this->_animation_period = config.build_running.period;
+            this->_animation_color = config->build_running.color;
+            this->_animation_period = config->build_running.period;
             this->_animation_f = std::bind(&LEDNotifier::Fade, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
             break;
         case SUCCESS:
-            this->_animation_color = config.build_ok.color;
-            this->_animation_period = config.build_ok.period;
+            this->_animation_color = config->build_ok.color;
+            this->_animation_period = config->build_ok.period;
             this->_animation_f = std::bind(&LEDNotifier::On, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
             break;
         case FAILURE:
-            this->_animation_color = config.build_err.color;
-            this->_animation_period = config.build_err.period;
+            this->_animation_color = config->build_err.color;
+            this->_animation_period = config->build_err.period;
             this->_animation_f = std::bind(&LEDNotifier::Blink, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
         case SERVER_ERROR:
-            this->_animation_color = config.server_down.color;
-            this->_animation_period = config.server_down.period;
+            this->_animation_color = config->server_down.color;
+            this->_animation_period = config->server_down.period;
             this->_animation_f = std::bind(&LEDNotifier::Blink, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
     }
 }   

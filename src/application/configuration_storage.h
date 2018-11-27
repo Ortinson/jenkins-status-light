@@ -7,7 +7,7 @@
 class ConfigurationStorage {
 public:
   ConfigurationStorage(void);
-  lamp_config_t GetStoredConfig(void);
+  lamp_config_t* GetStoredConfig(void);
   void StoreConfig(lamp_config_t* config);
   void SubscribeToConfigChange(std::function<void(void)> callback);
   void SetMonitorPeriod(String conf);
