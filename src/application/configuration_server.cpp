@@ -28,34 +28,28 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
 
   String param;
   if (request->hasParam("dev_name", true)) {
-    Serial.printf("dev_name\n");
     param = request->getParam("dev_name", true)->value();
     this->_storage->SetDeviceName(param);
   }
   if (request->hasParam("monitor_period", true)) {
-    Serial.printf("monitor_period\n");
     param = request->getParam("monitor_period", true)->value();
     this->_storage->SetMonitorPeriod(param);
   }
   if (request->hasParam("build_period", true)) {
-    Serial.printf("build_period\n");
     param = request->getParam("build_period", true)->value();
     this->_storage->SetBuildPeriod(param);
   }
   if (request->hasParam("user", true)) {
-    Serial.printf("User\n");
     param = request->getParam("user", true)->value();
     if (param)
       this->_storage->SetJenkinsUser(param);
   }
   if (request->hasParam("password", true)) {
-    Serial.printf("password\n");
     param = request->getParam("password", true)->value();
     if (param.length() != 0)
       this->_storage->SetJenkinsPassword(param);
   }
   if (request->hasParam("uri", true)) {
-    Serial.printf("uri\n");
     param = request->getParam("uri", true)->value();
     this->_storage->SetUri(param);
   }
@@ -64,8 +58,6 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
 }
 
 String ConfigurationServer::IndexTemplateProcessor(const String& var) {
-  if(var == "STATE")
-    return String("Hello World!!!");
   if(var == "DEV_NAME")
     return String(this->_config->device_name);
   if(var == "MONITOR_PERIOD")
