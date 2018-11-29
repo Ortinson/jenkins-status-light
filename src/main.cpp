@@ -1,4 +1,8 @@
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
+
+#define _TASK_STD_FUNCTION
+#include <TaskScheduler.h>        //https://github.com/arkhipenko/TaskScheduler
+
 // Needed for wifi manager library
 // #include <DNSServer.h>
 // #include <ESP8266WebServer.h>
@@ -14,13 +18,15 @@ ConfigurationServer* server;
 JenkinsMonitor* monitor;
 LEDNotifier* notifier;
 
+Scheduler scheduler; 
+
 void setup() {
     Serial.begin(9600);
     Serial.println("starting setup");
     storage = new ConfigurationStorage();
     server = new ConfigurationServer(storage);
     notifier = new LEDNotifier();
-    monitor = new JenkinsMonitor(storage, notifier, 10); //TODO(Ortinson): fetch period from configuration server
+    monitor = new JenkinsMonitor(storage, notifier, &scheduler);
 
     const char* ssid = "ssid";
     const char* password = "password";
@@ -40,18 +46,6 @@ void setup() {
 }
 
 void loop() {
-  monitor->Monitor();
-  unsigned long monitor_period = storage->GetStoredConfig()->monitor_period * 1000;
-  unsigned long next_trigger = millis() + monitor_period;
-  unsigned long t;
-  while(true){
-    notifier->Cycle();
-    t = millis();
-    if (t > next_trigger){
-      Serial.println("\nGoing to monitor...");
-      next_trigger = t + monitor_period;
-      monitor->Monitor();
-    }
-    delay(10);  // TODO(Ortinson): Investigate why watchdog barks if no delay()  
-  }
+  notifier->Cycle();
+  scheduler.execute();
 }

@@ -1,24 +1,21 @@
 #include "jenkins_monitor.h"
 
-JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier* notifier, uint period) :
+JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier* notifier, Scheduler* scheduler) :
     _config_storage(config_storage),
     _notifier(notifier),
-    _period(period){
+    _scheduler(scheduler){
   this->_config = this->_config_storage->GetStoredConfig();
   this->_config_storage->SubscribeToConfigChange(std::bind(&JenkinsMonitor::OnConfigUpdate, this));
-}
 
-void JenkinsMonitor::Start() {
-  // this->_myTicker.attach(this->_period, std::bind(&JenkinsMonitor::Monitor, this));  // TODO(Ortinson): Use timer to trigger Monitor()
-}
-
-void JenkinsMonitor::Stop() {
-  // TODO(Ortinson): Use timer to trigger Monitor()
+  this->_t1 = new Task(_config->monitor_period * 1000, TASK_FOREVER, std::bind(&JenkinsMonitor::Monitor, this));
+  this->_scheduler->addTask(*_t1);
+  this->_t1->enable();
 }
 
 void JenkinsMonitor::OnConfigUpdate(){
   Serial.println("Monitor callback called!!!!");
-  this->Monitor();
+  this->_t1->setInterval(_config->monitor_period * 1000);
+  this->_t1->forceNextIteration();
 }
 
 void JenkinsMonitor::Monitor(){
@@ -28,7 +25,7 @@ void JenkinsMonitor::Monitor(){
 
 jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
   this->_http.begin(this->_config->uri);
-  this->_http.setAuthorization(this->_config->jenkins_user, this->_config->jenkins_password);  //TODO get authorization from config
+  this->_http.setAuthorization(this->_config->jenkins_user, this->_config->jenkins_password);
   
   int httpCode = this->_http.GET();
   Serial.printf("[HTTP] GET... code: %d\n", httpCode);
@@ -43,32 +40,25 @@ jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
 }
 
 jenkins_status_t JenkinsMonitor::ParseResponse(const String response){
-  const size_t capacity = 20000;
+  const size_t capacity = 20000;  // TODO(Ortinson): This number is ridiculously big
   DynamicJsonBuffer jsonBuffer(capacity);
 
   JsonObject& root = jsonBuffer.parseObject(response, 30);
   if (!root.success()) {
-    Serial.println(F("Parsing failed!"));
+    Serial.println(F("  Parsing failed!"));
     return SERVER_ERROR;
   }
-  // Print values  // TODO(Ortinson): Remove
-  //         Serial.println(response);
-  // Serial.println(F("Response:"));
-  // Serial.println(root["building"].as<char*>());
-  // Serial.println(root["result"].as<char*>());
-  // Serial.println(root["culprits"][0]["absoluteUrl"].as<char*>());
-  // Serial.println(root["culprits"][0]["fullName"].as<char*>());
 
   String building = root["building"].as<String>();
   String result = root["result"].as<String>();
   if (building == "true"){
-    Serial.println("Build is running.");
+    Serial.println("  Build is running.");
     return RUNNING;
   }else if (result == "SUCCESS") {
-    Serial.println("Build Successful.");
+    Serial.println("  Build Successful.");
     return SUCCESS;
   }else if (result == "FAILURE") {
-    Serial.println("Build failed.");
+    Serial.println("  Build failed.");
     return FAILURE;
   }
   return SERVER_ERROR;

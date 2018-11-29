@@ -3,6 +3,7 @@
 
 LEDNotifier::LEDNotifier(){
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(&this->_leds[0], 16);
+    this->BindAnimation(animation_t::OFF);
 }
 
 void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){

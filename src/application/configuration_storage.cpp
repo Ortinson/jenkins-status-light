@@ -20,7 +20,7 @@ void ConfigurationStorage::StoreConfig(lamp_config_t* config) {
   EEPROM.put(this->_eeprom_addr, this->_config);
   EEPROM.commit();
   if(this->_callback) {
-    //this->_callback(); //TODO(Ortinson): Device crashes. Use other method to notify callback
+    this->_callback();
   }
 }
 

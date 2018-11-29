@@ -4,19 +4,18 @@
 #include <ArduinoJson.h>
 #include <WiFiClient.h>
 #include <ESP8266HTTPClient.h>
-// #include "Ticker.h"
+
+#define _TASK_STD_FUNCTION
+#include <TaskSchedulerDeclarations.h>
+
 #include "configuration_storage.h"
 #include "LED_notifier.h"
 #include "common/lamp_config.h"
 
-// URI example: http://jenkins.me-client.com/job/DBI-Firmware/job/dbi-icbis-controller/job/master/lastBuild/api/json?pretty=false
-// https://restninja.io/
 class JenkinsMonitor {
 public:
-  JenkinsMonitor(ConfigurationStorage* configStorage, LEDNotifier* notifier, uint period);
+  JenkinsMonitor(ConfigurationStorage* configStorage, LEDNotifier* notifier, Scheduler* scheduler);
   void Monitor();
-  void Start();
-  void Stop();
 
 private:
   void OnConfigUpdate();
@@ -25,10 +24,12 @@ private:
   lamp_config_t* _config;
   ConfigurationStorage* _config_storage;
   LEDNotifier* _notifier;
+  
   WiFiClient _client;
   HTTPClient _http;
+  Scheduler* _scheduler;
+  Task* _t1;
   uint _period;
-  // Ticker _myTicker;
 };
 
 #endif // APPLICATION_JENKINS_MONITOR_H_
