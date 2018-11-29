@@ -4,7 +4,6 @@ LEDNotifier::LEDNotifier(){
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(&this->_leds[0], 16);
 }
 
-// Todo(Ortinson): select function to call based on config file
 void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
     Notification* n = NULL;
     for (int i = 0; i < 4; i++){  // TODO(Ortinson): Remove magic number 4 comming from enum jenkins_status_t
