@@ -1,12 +1,13 @@
 #include "LED_notifier.h"
 #define DATA_PIN 5 // FastLED requires this definition
+
 LEDNotifier::LEDNotifier(){
     FastLED.addLeds<NEOPIXEL, DATA_PIN>(&this->_leds[0], 16);
 }
 
 void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
     Notification* n = NULL;
-    for (int i = 0; i < 4; i++){  // TODO(Ortinson): Remove magic number 4 comming from enum jenkins_status_t
+    for (int i = 0; i < JENKINS_STATUS_NR_ITEMS; i++){
         if (config->notification_list[i].jenkins_status == status) {
             n = &config->notification_list[i];
             break;

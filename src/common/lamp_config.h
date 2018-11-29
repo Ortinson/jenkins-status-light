@@ -17,6 +17,7 @@ typedef enum  {
     SUCCESS,
     FAILURE,
     SERVER_ERROR,
+    JENKINS_STATUS_NR_ITEMS,
 } jenkins_status_t;
 
 struct Color {
@@ -31,7 +32,7 @@ struct Notification {
 };
 
 typedef struct{
-  Notification notification_list[4]; //TODO(Ortinson): check if can remove magic number
+  Notification notification_list[JENKINS_STATUS_NR_ITEMS];
   uint32_t monitor_period;
   uint32_t build_period;
   char jenkins_user[256];
