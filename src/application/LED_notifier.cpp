@@ -6,37 +6,55 @@ LEDNotifier::LEDNotifier(){
 
 // Todo(Ortinson): select function to call based on config file
 void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
-    switch(status){
-        case RUNNING:
-            this->_animation_color = config->build_running.color;
-            this->_animation_period = config->build_running.period;
-            this->_animation_f = std::bind(&LEDNotifier::Fade, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+    Notification* n = NULL;
+    for (int i = 0; i < 4; i++){  // TODO(Ortinson): Remove magic number 4 comming from enum jenkins_status_t
+        if (config->notification_list[i].jenkins_status == status) {
+            n = &config->notification_list[i];
             break;
-        case SUCCESS:
-            this->_animation_color = config->build_ok.color;
-            this->_animation_period = config->build_ok.period;
-            this->_animation_f = std::bind(&LEDNotifier::On, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-            break;
-        case FAILURE:
-            this->_animation_color = config->build_err.color;
-            this->_animation_period = config->build_err.period;
-            this->_animation_f = std::bind(&LEDNotifier::Fade, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
-            break;
-        case SERVER_ERROR:
-            this->_animation_color = config->server_down.color;
-            this->_animation_period = config->server_down.period;
-            this->_animation_f = std::bind(&LEDNotifier::Blink, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
+        }
     }
+
+    if (n == NULL) {
+        printf("status %d not found in configuration", status);
+        return;
+    }
+
+    this->_animation_color = n->color;
+    this->_animation_period = n->period;
+    this-> BindAnimation(n->animation);
 }   
+
+void LEDNotifier::BindAnimation(animation_t animation) {
+    void (LEDNotifier::*function)(unsigned long, Color, unsigned long);
+    switch (animation) {
+    case animation_t::ON:
+        function = &LEDNotifier::On;
+        break;
+    case animation_t::OFF:
+        function = &LEDNotifier::Off;
+        break;
+    case animation_t::Flash:
+        function = &LEDNotifier::Flash;
+        break;
+    case animation_t::Pulse:
+        function = &LEDNotifier::Pulse;
+        break;
+    case animation_t::Rainbow:
+        function = &LEDNotifier::Rainbow;
+        break;
+    }
+
+    this->_animation_f = std::bind(function, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);    
+}
 
 void LEDNotifier::Cycle(){
     this->_animation_f(millis(), this->_animation_color, this->_animation_period);
 }
 
-void LEDNotifier::Blink(unsigned long tim, Color color, unsigned long period){ 
-    static unsigned long next_blink = 0;
+void LEDNotifier::Flash(unsigned long tim, Color color, unsigned long period){ 
+    static unsigned long next_flash = 0;
     static bool onoff = true;
-    if (next_blink < tim){
+    if (next_flash < tim){
         if (onoff){
             this->ShowColor(color);
         }else{
@@ -44,11 +62,11 @@ void LEDNotifier::Blink(unsigned long tim, Color color, unsigned long period){
         }
         onoff = !onoff;
         FastLED.show();
-    next_blink = tim + period * 1000;
+    next_flash = tim + period * 1000;
     }    
 }
 
-void LEDNotifier::Fade(unsigned long tim, Color color, unsigned long period){ 
+void LEDNotifier::Pulse(unsigned long tim, Color color, unsigned long period){ 
     static unsigned long cycle_start = 0;
     
     if (tim > cycle_start + period * 1000){
@@ -56,14 +74,14 @@ void LEDNotifier::Fade(unsigned long tim, Color color, unsigned long period){
     }
 
     unsigned long elapsed_time = tim - cycle_start;
-    double fade = 1;
+    double pulse = 1;
     if (elapsed_time != 0)
-        fade = (double)elapsed_time / ((double)period * (double)1000) ;
-    fade = (sin(fade * (double)6.28) + (double)1)/(double)2;
+        pulse = (double)elapsed_time / ((double)period * (double)1000) ;
+    pulse = (sin(pulse * (double)6.28) + (double)1)/(double)2;
 
-    color.red = static_cast<uint8_t>(color.red*fade);
-    color.green = static_cast<uint8_t>(color.green*fade);
-    color.blue = static_cast<uint8_t>(color.blue*fade);
+    color.red = static_cast<uint8_t>(color.red*pulse);
+    color.green = static_cast<uint8_t>(color.green*pulse);
+    color.blue = static_cast<uint8_t>(color.blue*pulse);
     
     this->ShowColor(color);
 }
@@ -78,6 +96,10 @@ void LEDNotifier::Off(unsigned long tim, Color color, unsigned long period) {
 
 void LEDNotifier::Off() {
     FastLED.clear();
+}
+
+void LEDNotifier::Rainbow(unsigned long tim, Color color, unsigned long period) {
+    FastLED.clear(); // TODO(Ortinson): Implement
 }
 
 void LEDNotifier::ShowColor(Color color) {

@@ -18,13 +18,15 @@ public:
   void Cycle();
 
 private:
-  void Blink(unsigned long time, Color color, unsigned long period);
+  void Flash(unsigned long time, Color color, unsigned long period);
+  void Pulse(unsigned long time, Color color, unsigned long period);
+  void Rainbow(unsigned long time, Color color, unsigned long period);
   void On(unsigned long time, Color color, unsigned long period);
-  void Fade(unsigned long time, Color color, unsigned long period);
   void Off(unsigned long time, Color color, unsigned long period);
   void Off();
   void ShowColor(Color color);
   void ShowColor(uint8_t r, uint8_t g, uint8_t b);
+  void BindAnimation(animation_t animation);
 
   unsigned char _data_pin;
   size_t _led_number = NUM_LED;

@@ -4,12 +4,11 @@
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #include <stdint.h>
 
-typedef enum  {
+typedef enum class {
     ON,
     OFF,
     Flash,
     Pulse,
-    Fade,
     Rainbow,
 } animation_t;
 
@@ -18,7 +17,6 @@ typedef enum  {
     SUCCESS,
     FAILURE,
     SERVER_ERROR,
-
 } jenkins_status_t;
 
 struct Color {
@@ -26,17 +24,14 @@ struct Color {
 };
 
 struct Notification {
+    jenkins_status_t jenkins_status;
     Color color;
     animation_t animation;
     uint32_t period;
 };
 
 typedef struct{
-  Notification build_ok;
-  Notification build_err;
-  Notification build_running;
-  Notification build_not_found;
-  Notification server_down;
+  Notification notification_list[4]; //TODO(Ortinson): check if can remove magic number
   uint32_t monitor_period;
   uint32_t build_period;
   char jenkins_user[256];
