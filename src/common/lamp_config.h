@@ -21,7 +21,7 @@ typedef enum  {
 } jenkins_status_t;
 
 struct Color {
-  uint8_t red, green, blue;
+  size_t red, green, blue;  // TODO(Ortinson): Check if there is old code using uint8_t
 };
 
 struct Notification {

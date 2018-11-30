@@ -1,9 +1,11 @@
 #ifndef APPLICATION_CONFIGURATION_STORAGE_H_
 #define APPLICATION_CONFIGURATION_STORAGE_H_
 
-#include "common/lamp_config.h"
 #include <string>
 #include <EEPROM.h>
+#include "common/utils.h"
+#include "common/lamp_config.h"
+
 class ConfigurationStorage {
 public:
   ConfigurationStorage(void);
@@ -16,6 +18,10 @@ public:
   void SetJenkinsPassword(String conf);
   void SetUri(String conf);
   void SetDeviceName(String conf);
+  void SetSuccessColor(String conf);
+  void SetFailureColor(String conf);
+  void SetRunningColor(String conf);
+  void SetErrorColor(String conf);
 private:
   static const int _eeprom_addr = 0;
   // TODO(Ortinson): Move to confifg file (SPIFFS).
@@ -30,7 +36,7 @@ private:
     .jenkins_password = "",
     .uri = "",
     .device_name = "Jenkins Status Light",
-    .valid_config = 0xDEADBEEF
+    .valid_config = 0xDEADBE15
   };
   lamp_config_t _config;
   std::function<void(void)> _callback = NULL;

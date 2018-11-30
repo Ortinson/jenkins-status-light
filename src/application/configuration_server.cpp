@@ -53,6 +53,26 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
     param = request->getParam("uri", true)->value();
     this->_storage->SetUri(param);
   }
+
+  if (request->hasParam("success_color", true)) {
+    param = request->getParam("success_color", true)->value();
+    this->_storage->SetSuccessColor(param);
+  }
+
+  if (request->hasParam("failure_color", true)) {
+    param = request->getParam("failure_color", true)->value();
+    this->_storage->SetFailureColor(param);
+  }
+
+  if (request->hasParam("running_color", true)) {
+    param = request->getParam("running_color", true)->value();
+    this->_storage->SetRunningColor(param);
+  }
+
+  if (request->hasParam("error_color", true)) {
+    param = request->getParam("error_color", true)->value();
+    this->_storage->SetErrorColor(param);
+  }
   
   this->SendIndex(request);
 }
@@ -68,6 +88,14 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
     return String(this->_config->uri);
   if(var == "USER")
     return String(this->_config->jenkins_user);
+  if(var == "SUCCESS_COLOR")
+    return ::ColorToHTML(this->_config->notification_list[0].color); //TODO(Ortinson): substitute magic numbers with SelectNotification
+  if(var == "FAILURE_COLOR")
+    return ::ColorToHTML(this->_config->notification_list[1].color);
+  if(var == "RUNNING_COLOR")
+    return ::ColorToHTML(this->_config->notification_list[2].color);
+  if(var == "ERROR_COLOR")
+    return ::ColorToHTML(this->_config->notification_list[3].color);
   return String();
 }
 

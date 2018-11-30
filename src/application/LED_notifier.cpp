@@ -7,13 +7,7 @@ LEDNotifier::LEDNotifier(){
 }
 
 void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
-    Notification* n = NULL;
-    for (int i = 0; i < JENKINS_STATUS_NR_ITEMS; i++){
-        if (config->notification_list[i].jenkins_status == status) {
-            n = &config->notification_list[i];
-            break;
-        }
-    }
+    Notification* n = ::SelectNotification(config, status);
 
     if (n == NULL) {
         printf("status %d not found in configuration", status);

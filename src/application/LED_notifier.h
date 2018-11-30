@@ -5,6 +5,7 @@
 
 #include <stdint.h>
 #include "common/lamp_config.h"
+#include "common/utils.h"
 #include <FastLED.h>
 
 // TODO (Ortinson): Define notification interface based on this driver.

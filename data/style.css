@@ -25,34 +25,6 @@ h1 {
 	margin: -16px -16px 16px -16px;
 }
 
-input[type="submit"],
-input[type="button"]{
-	box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	font-size: 140%;
-	width: 100%;
-	padding: 3%;
-	background: #43D1AF;
-	border-bottom: 2px solid #30C29E;
-	border-top-style: none;
-	border-right-style: none;
-	border-left-style: none;	
-	color: #fff;
-  outline: 0;
-}
-
-input[type="submit"]:hover,
-input[type="button"]:hover{
-	background: #2EBC99;
-}
-
-input[type="submit"]:active,
-input[type="button"]:active{
-		background: #20876d;
-	  border-bottom: 2px solid #20876d;
-}
-
 form > div {
   
   clear: both;
@@ -89,8 +61,47 @@ input[type=email],
 input[type=url],
 input[type=number],
 input[type=password],
+input[type="color"],
+input[type="submit"],
+input[type="button"],
 textarea {
-	width: 100%;
+  width: 60%;
+}
+
+input[type="submit"],
+input[type="button"]{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	font-size: 140%;
+	padding: 3%;
+	background: #43D1AF;
+	border-bottom: 2px solid #30C29E;
+	border-top-style: none;
+	border-right-style: none;
+	border-left-style: none;	
+	color: #fff;
+  outline: 0;
+}
+
+input[type="submit"]:hover,
+input[type="button"]:hover{
+	background: #2EBC99;
+}
+
+input[type="submit"]:active,
+input[type="button"]:active{
+		background: #20876d;
+	  border-bottom: 2px solid #20876d;
+}
+
+input[type=text],
+input[type=email],
+input[type=url],
+input[type=number],
+input[type=password],
+input[type="color"],
+textarea {
   -webkit-transition: all 0.30s ease-in-out;
 	-moz-transition: all 0.30s ease-in-out;
 	-ms-transition: all 0.30s ease-in-out;
@@ -106,13 +117,12 @@ textarea {
   color: #555;
   font: 95% Arial, Helvetica, sans-serif;
 }
-input[type=text],
-input[type=email],
-input[type=number],
-input[type=submit],
-input[type=password] {
-  width: 60%;
+
+input[type="color"]{
+  padding: 0%;
+  height: 40px;
 }
+
 input[type=text]:focus,
 input[type=email]:focus,
 input[type=url]:focus,
@@ -148,6 +158,9 @@ textarea:focus {
   input[type=url],
   input[type=number],
   input[type=password],
+  input[type=color],
+  input[type=submit],
+  input[type=button],
   textarea,
   h1,
   select {

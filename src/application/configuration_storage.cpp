@@ -52,3 +52,27 @@ void ConfigurationStorage::SetUri(String conf) {
 void ConfigurationStorage::SubscribeToConfigChange(std::function<void(void)> callback) {
   this->_callback = callback;
 }
+
+void ConfigurationStorage::SetSuccessColor(String conf) {
+  Notification* n = SelectNotification(&this->_config, SUCCESS);
+  n->color = ::HTMLToColor(conf);
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetFailureColor(String conf) {
+  Notification* n = SelectNotification(&this->_config, FAILURE);
+  n->color = ::HTMLToColor(conf);
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetRunningColor(String conf) {
+  Notification* n = SelectNotification(&this->_config, RUNNING);
+  n->color = ::HTMLToColor(conf);
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetErrorColor(String conf) {
+  Notification* n = SelectNotification(&this->_config, SERVER_ERROR);
+  n->color = ::HTMLToColor(conf);
+  this->StoreConfig(&this->_config);
+}
