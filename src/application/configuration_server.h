@@ -6,6 +6,7 @@
 
 #include "configuration_storage.h"
 #include "common/lamp_config.h"
+#include "common/utils.h"
 
 class ConfigurationServer {
 public:
