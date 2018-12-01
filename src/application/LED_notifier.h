@@ -8,10 +8,6 @@
 #include "common/utils.h"
 #include <FastLED.h>
 
-// TODO (Ortinson): Define notification interface based on this driver.
-// We just want to notify the state of the jenkins build. The way this is
-// achieved do not matter.
-
 class LEDNotifier {
 public:
   LEDNotifier();
