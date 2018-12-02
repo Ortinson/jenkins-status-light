@@ -18,7 +18,6 @@ form header div {
 h1 {
 	background: #43D1AF;
 	padding: 20px 0;
-	font-size: 140%;
 	font-weight: 300;
 	text-align: center;
 	color: #fff;
@@ -45,7 +44,7 @@ legend {
 }
 form > div > div,
 form > div > fieldset > div {
-  width: 75%;
+  width: 70%;
   float: right;
 }
 form > div > fieldset label {
@@ -61,7 +60,6 @@ input[type=email],
 input[type=url],
 input[type=number],
 input[type=password],
-input[type="color"],
 input[type="submit"],
 input[type="button"],
 textarea {
@@ -100,16 +98,12 @@ input[type=email],
 input[type=url],
 input[type=number],
 input[type=password],
-input[type="color"],
 textarea {
   -webkit-transition: all 0.30s ease-in-out;
 	-moz-transition: all 0.30s ease-in-out;
 	-ms-transition: all 0.30s ease-in-out;
 	-o-transition: all 0.30s ease-in-out;
-  outline: none;
-  box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
+  outline: none;  
   background: #fff;
 	border: 1px solid #ccc;
   margin-bottom: 1%;
@@ -118,9 +112,18 @@ textarea {
   font: 95% Arial, Helvetica, sans-serif;
 }
 
-input[type="color"]{
+input[type=color]{
+  background: #fff;
+  vertical-align: top;
   padding: 0%;
-  height: 40px;
+  border: 0px;
+  height: 38px;
+  width: 30%;
+}
+select{
+  margin-top: 1%;
+  height: 30px;
+  width: 30%;
 }
 
 input[type=text]:focus,
@@ -158,15 +161,18 @@ textarea:focus {
   input[type=url],
   input[type=number],
   input[type=password],
-  input[type=color],
   input[type=submit],
   input[type=button],
-  textarea,
-  h1,
-  select {
+  textarea{
     width: 100%; 
   }
+
+  input[type=color],
+  select{
+    width: 49%;
+  }
 }
+
 @media (min-width: 1200px) {
   form > div > label,
 	legend {

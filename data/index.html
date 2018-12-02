@@ -19,14 +19,14 @@
     </div>
     
     <div>
-      <label class="desc"> Monitor Period (seconds): </label>
+      <label class="desc"> Monitor Period (s): </label>
       <div>
         <input type="number" name="monitor_period" value="%MONITOR_PERIOD%"> <br>
       </div>  
     </div>
     
     <div>
-      <label class="desc"> Build Period (seconds): </label>
+      <label class="desc"> Build Period (s): </label>
       <div>
         <input type="number" name="build_period" value="%BUILD_PERIOD%"> <br>
       </div>  
@@ -56,28 +56,47 @@
     <div>
       <label class="desc"> Success color: </label>
       <div>
-        <input type="color" name="success_color", value="%SUCCESS_COLOR%"> <br>
+        <input type="color" name="success_color", value="%SUCCESS_COLOR%">
+        <select name="success_animation">
+          %SUCCESS_ANIMATION%
+          <!-- <option value="0">Select car:</option>
+          <option value="1">Audi</option>
+          <option value="2">BMW</option> -->
+        </select>
+        <br>
       </div>  
     </div>
     
     <div>
       <label class="desc"> Failure color: </label>
       <div>
-        <input type="color" name="failure_color", value="%FAILURE_COLOR%"> <br>
+        <input type="color" name="failure_color", value="%FAILURE_COLOR%"> 
+        <select name="failure_animation">
+          %FAILURE_ANIMATION%
+        </select>
+        <br>
       </div>  
     </div>
     
     <div>
       <label class="desc"> Running color: </label>
       <div>
-        <input type="color" name="running_color", value="%RUNNING_COLOR%"> <br>
+        <input type="color" name="running_color", value="%RUNNING_COLOR%">
+        <select name="running_animation">
+          %RUNNING_ANIMATION%
+        </select>
+        <br>
       </div>  
     </div>
     
     <div>
       <label class="desc"> Error color: </label>
       <div>
-        <input type="color" name="error_color", value="%ERROR_COLOR%"> <br>
+        <input type="color" name="error_color", value="%ERROR_COLOR%">
+        <select name="error_animation">
+          %ERROR_ANIMATION%
+        </select>
+        <br>
       </div>  
     </div>
 
