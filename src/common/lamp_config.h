@@ -4,13 +4,23 @@
 #include <ESP8266WiFi.h>          //https://github.com/esp8266/Arduino
 #include <stdint.h>
 
-typedef enum class {
+enum class animation_t {
     ON,
     OFF,
     Flash,
     Pulse,
     Rainbow,
-} animation_t;
+    ANIMATION_T_NR_ITEMS,
+};
+
+// WARNING: This list deends on animation_t.
+static String animation_names[static_cast<unsigned>(animation_t::ANIMATION_T_NR_ITEMS)] = {
+    "ON",
+    "OFF",
+    "Flash",
+    "Pulse",
+    "Rainbow",
+};
 
 typedef enum  {
     RUNNING,

@@ -73,6 +73,26 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
     param = request->getParam("error_color", true)->value();
     this->_storage->SetErrorColor(param);
   }
+
+    if (request->hasParam("success_animation", true)) {
+    param = request->getParam("success_animation", true)->value();
+    this->_storage->SetSuccessAnimation(param);
+  }
+
+  if (request->hasParam("failure_animation", true)) {
+    param = request->getParam("failure_animation", true)->value();
+    this->_storage->SetFailureAnimation(param);
+  }
+
+  if (request->hasParam("running_animation", true)) {
+    param = request->getParam("running_animation", true)->value();
+    this->_storage->SetRunningAnimation(param);
+  }
+
+  if (request->hasParam("error_animation", true)) {
+    param = request->getParam("error_animation", true)->value();
+    this->_storage->SetErrorAnimation(param);
+  }
   
   this->SendIndex(request);
 }
@@ -96,7 +116,28 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
     return ::ColorToHTML(::SelectNotification(this->_config, FAILURE)->color);
   if(var == "ERROR_COLOR")
     return ::ColorToHTML(::SelectNotification(this->_config, SERVER_ERROR)->color);
+  if(var == "SUCCESS_ANIMATION")
+    return this->MakeSelectList(SUCCESS);
+  if(var == "FAILURE_ANIMATION")
+    return this->MakeSelectList(FAILURE);
+  if(var == "RUNNING_ANIMATION")
+    return this->MakeSelectList(RUNNING);
+  if(var == "ERROR_ANIMATION")
+    return this->MakeSelectList(SERVER_ERROR);
   return String();
+}
+
+String ConfigurationServer::MakeSelectList(jenkins_status_t status) {
+  String result = String();
+  animation_t anim = ::SelectNotification(this->_config, status)->animation;
+  for (unsigned int i = 0; i < static_cast<unsigned>(animation_t::ANIMATION_T_NR_ITEMS); i++) {
+    result = result + "<option value=\"" + i + '"';
+    if (i == static_cast<unsigned int>(anim)) {
+      result = result + " selected";
+    }
+    result = result + ">" + animation_names[i] + "</option>";
+  }
+  return result;
 }
 
 void ConfigurationServer::Start(){

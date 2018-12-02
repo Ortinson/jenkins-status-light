@@ -20,6 +20,7 @@ private:
   
   void SendIndex(AsyncWebServerRequest *request);
   void UpdateConfig(AsyncWebServerRequest *request);
+  String MakeSelectList(jenkins_status_t status);
   String IndexTemplateProcessor(const String& var);
   void setURIS();
 };

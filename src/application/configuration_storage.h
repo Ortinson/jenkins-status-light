@@ -18,10 +18,17 @@ public:
   void SetJenkinsPassword(String conf);
   void SetUri(String conf);
   void SetDeviceName(String conf);
+  
   void SetSuccessColor(String conf);
   void SetFailureColor(String conf);
   void SetRunningColor(String conf);
   void SetErrorColor(String conf);
+
+  void SetSuccessAnimation(String conf);
+  void SetFailureAnimation(String conf);
+  void SetRunningAnimation(String conf);
+  void SetErrorAnimation(String conf);
+
 private:
   static const int _eeprom_addr = 0;
   // TODO(Ortinson): Move to confifg file (SPIFFS).

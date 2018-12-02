@@ -76,3 +76,27 @@ void ConfigurationStorage::SetErrorColor(String conf) {
   n->color = ::HTMLToColor(conf);
   this->StoreConfig(&this->_config);
 }
+
+void ConfigurationStorage::SetSuccessAnimation(String conf) {
+  Notification* n = SelectNotification(&this->_config, SUCCESS);
+  n->animation = static_cast<animation_t>(atoi(conf.c_str()));
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetFailureAnimation(String conf) {
+  Notification* n = SelectNotification(&this->_config, FAILURE);
+  n->animation = static_cast<animation_t>(atoi(conf.c_str()));
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetRunningAnimation(String conf) {
+  Notification* n = SelectNotification(&this->_config, RUNNING);
+  n->animation = static_cast<animation_t>(atoi(conf.c_str()));
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetErrorAnimation(String conf) {
+  Notification* n = SelectNotification(&this->_config, SERVER_ERROR);
+  n->animation = static_cast<animation_t>(atoi(conf.c_str()));
+  this->StoreConfig(&this->_config);
+}
