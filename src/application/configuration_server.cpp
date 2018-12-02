@@ -88,14 +88,14 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
     return String(this->_config->uri);
   if(var == "USER")
     return String(this->_config->jenkins_user);
-  if(var == "SUCCESS_COLOR")
-    return ::ColorToHTML(this->_config->notification_list[0].color); //TODO(Ortinson): substitute magic numbers with SelectNotification
-  if(var == "FAILURE_COLOR")
-    return ::ColorToHTML(this->_config->notification_list[1].color);
   if(var == "RUNNING_COLOR")
-    return ::ColorToHTML(this->_config->notification_list[2].color);
+    return ::ColorToHTML(::SelectNotification(this->_config, RUNNING)->color);
+  if(var == "SUCCESS_COLOR")
+    return ::ColorToHTML(::SelectNotification(this->_config, SUCCESS)->color);
+  if(var == "FAILURE_COLOR")
+    return ::ColorToHTML(::SelectNotification(this->_config, FAILURE)->color);
   if(var == "ERROR_COLOR")
-    return ::ColorToHTML(this->_config->notification_list[3].color);
+    return ::ColorToHTML(::SelectNotification(this->_config, SERVER_ERROR)->color);
   return String();
 }
 
