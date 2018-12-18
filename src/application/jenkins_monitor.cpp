@@ -26,7 +26,7 @@ void JenkinsMonitor::Monitor(){
 jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
   this->_http.begin(this->_config->uri);
   this->_http.setAuthorization(this->_config->jenkins_user, this->_config->jenkins_password);
-  
+
   int httpCode = this->_http.GET();
   Serial.printf("[HTTP] GET... code: %d\n", httpCode);
   if (httpCode != HTTP_CODE_OK) {
@@ -40,7 +40,7 @@ jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
 }
 
 jenkins_status_t JenkinsMonitor::ParseResponse(const String response){
-  const size_t capacity = 20000;  // TODO(Ortinson): This number is ridiculously big
+  const size_t capacity = 500;
   DynamicJsonBuffer jsonBuffer(capacity);
 
   JsonObject& root = jsonBuffer.parseObject(response, 30);
