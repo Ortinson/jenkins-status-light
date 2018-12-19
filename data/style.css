@@ -163,7 +163,6 @@ textarea:focus {
   input[type=text],
   input[type=email],
   input[type=url],
-  input[type=number],
   input[type=password],
   input[type=submit],
   input[type=button],
@@ -171,10 +170,10 @@ textarea:focus {
     width: 100%;
   }
 
-  input[type=color],
-  select{
-    width: 49%;
+  input[type=color]{
+    width: 10%;
   }
+
 }
 
 @media (min-width: 1200px) {
