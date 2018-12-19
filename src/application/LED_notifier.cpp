@@ -17,7 +17,7 @@ void LEDNotifier::Notify(lamp_config_t* config, jenkins_status_t status){
     this->_animation_color = n->color;
     this->_animation_period = n->period;
     this-> BindAnimation(n->animation);
-}   
+}
 
 void LEDNotifier::BindAnimation(animation_t animation) {
     void (LEDNotifier::*function)(unsigned long, Color, unsigned long);
@@ -39,14 +39,14 @@ void LEDNotifier::BindAnimation(animation_t animation) {
         break;
     }
 
-    this->_animation_f = std::bind(function, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);    
+    this->_animation_f = std::bind(function, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3);
 }
 
 void LEDNotifier::Cycle(){
     this->_animation_f(millis(), this->_animation_color, this->_animation_period);
 }
 
-void LEDNotifier::Flash(unsigned long tim, Color color, unsigned long period){ 
+void LEDNotifier::Flash(unsigned long tim, Color color, unsigned long period){
     static unsigned long next_flash = 0;
     static bool onoff = true;
     if (next_flash < tim){
@@ -58,12 +58,12 @@ void LEDNotifier::Flash(unsigned long tim, Color color, unsigned long period){
         onoff = !onoff;
         FastLED.show();
     next_flash = tim + period * 1000;
-    }    
+    }
 }
 
-void LEDNotifier::Pulse(unsigned long tim, Color color, unsigned long period){ 
+void LEDNotifier::Pulse(unsigned long tim, Color color, unsigned long period){
     static unsigned long cycle_start = 0;
-    
+
     if (tim > cycle_start + period * 1000){
         cycle_start = tim;
     }
@@ -77,7 +77,7 @@ void LEDNotifier::Pulse(unsigned long tim, Color color, unsigned long period){
     color.red = static_cast<uint8_t>(color.red*pulse);
     color.green = static_cast<uint8_t>(color.green*pulse);
     color.blue = static_cast<uint8_t>(color.blue*pulse);
-    
+
     this->ShowColor(color);
 }
 
@@ -86,11 +86,12 @@ void LEDNotifier::On(unsigned long tim, Color color, unsigned long period) {
 }
 
 void LEDNotifier::Off(unsigned long tim, Color color, unsigned long period) {
-    FastLED.clear();
+    this->Off();
 }
 
 void LEDNotifier::Off() {
     FastLED.clear();
+    FastLED.show();
 }
 
 void LEDNotifier::Rainbow(unsigned long tim, Color color, unsigned long period) {
