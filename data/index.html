@@ -6,95 +6,99 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" type="text/css" href="style.css">
 </head>
-  
+
 <body>
-  <h1>%DEV_NAME%</h1>  
+  <h1>%DEV_NAME%</h1>
   <form method='POST' action="/">
-    
+
     <div>
       <label class="desc"> Device name: </label>
       <div>
         <input type="text" name="dev_name" value="%DEV_NAME%"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Monitor Period (s): </label>
       <div>
         <input type="number" name="monitor_period" value="%MONITOR_PERIOD%"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Build Period (s): </label>
       <div>
         <input type="number" name="build_period" value="%BUILD_PERIOD%"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Jenkins user: </label>
       <div>
         <input type="text" name="user" value="%USER%"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Jenkins password: </label>
       <div>
         <input type="password" name="password"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> URI to check: </label>
       <div>
         <input type="text" name="uri", value="%URI%"> <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Success color: </label>
       <div>
-        <input type="color" name="success_color", value="%SUCCESS_COLOR%">
         <select name="success_animation">
           %SUCCESS_ANIMATION%
         </select>
+        <input type="number" name="success_period" value="%SUCCESS_PERIOD%">
+        <input type="color" name="success_color", value="%SUCCESS_COLOR%">
         <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Failure color: </label>
       <div>
-        <input type="color" name="failure_color", value="%FAILURE_COLOR%"> 
         <select name="failure_animation">
           %FAILURE_ANIMATION%
         </select>
+        <input type="number" name="failure_period" value="%FAILURE_PERIOD%">
+        <input type="color" name="failure_color", value="%FAILURE_COLOR%">
         <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Running color: </label>
       <div>
-        <input type="color" name="running_color", value="%RUNNING_COLOR%">
         <select name="running_animation">
           %RUNNING_ANIMATION%
         </select>
+        <input type="number" name="running_period" value="%RUNNING_PERIOD%">
+        <input type="color" name="running_color", value="%RUNNING_COLOR%">
         <br>
-      </div>  
+      </div>
     </div>
-    
+
     <div>
       <label class="desc"> Error color: </label>
       <div>
-        <input type="color" name="error_color", value="%ERROR_COLOR%">
         <select name="error_animation">
           %ERROR_ANIMATION%
         </select>
+        <input type="number" name="error_period" value="%ERROR_PERIOD%">
+        <input type="color" name="error_color", value="%ERROR_COLOR%">
         <br>
-      </div>  
+      </div>
     </div>
 
     <div>

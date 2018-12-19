@@ -8,7 +8,7 @@ body {
   padding: 15px 15%;
 }
 form header {
-  margin: 0 0 20px 0; 
+  margin: 0 0 20px 0;
 }
 form header div {
   font-size: 90%;
@@ -25,7 +25,7 @@ h1 {
 }
 
 form > div {
-  
+
   clear: both;
   overflow: hidden;
   padding: 1px;
@@ -77,7 +77,7 @@ input[type="button"]{
 	border-bottom: 2px solid #30C29E;
 	border-top-style: none;
 	border-right-style: none;
-	border-left-style: none;	
+	border-left-style: none;
 	color: #fff;
   outline: 0;
 }
@@ -103,7 +103,7 @@ textarea {
 	-moz-transition: all 0.30s ease-in-out;
 	-ms-transition: all 0.30s ease-in-out;
 	-o-transition: all 0.30s ease-in-out;
-  outline: none;  
+  outline: none;
   background: #fff;
 	border: 1px solid #ccc;
   margin-bottom: 1%;
@@ -118,12 +118,16 @@ input[type=color]{
   padding: 0%;
   border: 0px;
   height: 38px;
-  width: 30%;
+  width: 10%;
+}
+
+input[type=number]{
+  width: 15%;
 }
 select{
   margin-top: 1%;
   height: 30px;
-  width: 30%;
+  width: 33%;
 }
 
 input[type=text]:focus,
@@ -138,7 +142,7 @@ textarea:focus {
 
 @media (max-width: 800px) {
   form > div {
-    margin: 0 0 15px 0; 
+    margin: 0 0 15px 0;
   }
   body {
     padding-top: 16px;
@@ -164,7 +168,7 @@ textarea:focus {
   input[type=submit],
   input[type=button],
   textarea{
-    width: 100%; 
+    width: 100%;
   }
 
   input[type=color],
