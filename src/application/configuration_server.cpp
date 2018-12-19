@@ -93,7 +93,27 @@ void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
     param = request->getParam("error_animation", true)->value();
     this->_storage->SetErrorAnimation(param);
   }
-  
+
+  if (request->hasParam("success_period", true)) {
+    param = request->getParam("success_period", true)->value();
+    this->_storage->SetSuccessPeriod(param);
+  }
+
+  if (request->hasParam("failure_period", true)) {
+    param = request->getParam("failure_period", true)->value();
+    this->_storage->SetFailurePeriod(param);
+  }
+
+  if (request->hasParam("running_period", true)) {
+    param = request->getParam("running_period", true)->value();
+    this->_storage->SetRunningPeriod(param);
+  }
+
+  if (request->hasParam("error_period", true)) {
+    param = request->getParam("error_period", true)->value();
+    this->_storage->SetErrorPeriod(param);
+  }
+
   this->SendIndex(request);
 }
 
@@ -124,6 +144,15 @@ String ConfigurationServer::IndexTemplateProcessor(const String& var) {
     return this->MakeSelectList(RUNNING);
   if(var == "ERROR_ANIMATION")
     return this->MakeSelectList(SERVER_ERROR);
+  if(var == "SUCCESS_PERIOD")
+    return String(::SelectNotification(this->_config, SUCCESS)->period);
+  if(var == "FAILURE_PERIOD")
+    return String(::SelectNotification(this->_config, FAILURE)->period);
+  if(var == "RUNNING_PERIOD")
+    return String(::SelectNotification(this->_config, RUNNING)->period);
+  if(var == "ERROR_PERIOD")
+    return String(::SelectNotification(this->_config, SERVER_ERROR)->period);
+
   return String();
 }
 

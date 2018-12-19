@@ -18,7 +18,7 @@ public:
   void SetJenkinsPassword(String conf);
   void SetUri(String conf);
   void SetDeviceName(String conf);
-  
+
   void SetSuccessColor(String conf);
   void SetFailureColor(String conf);
   void SetRunningColor(String conf);
@@ -28,6 +28,11 @@ public:
   void SetFailureAnimation(String conf);
   void SetRunningAnimation(String conf);
   void SetErrorAnimation(String conf);
+
+  void SetSuccessPeriod(String conf);
+  void SetFailurePeriod(String conf);
+  void SetRunningPeriod(String conf);
+  void SetErrorPeriod(String conf);
 
 private:
   static const int _eeprom_addr = 0;

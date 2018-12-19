@@ -100,3 +100,27 @@ void ConfigurationStorage::SetErrorAnimation(String conf) {
   n->animation = static_cast<animation_t>(atoi(conf.c_str()));
   this->StoreConfig(&this->_config);
 }
+
+void ConfigurationStorage::SetSuccessPeriod(String conf) {
+  Notification* n = SelectNotification(&this->_config, SUCCESS);
+  n->period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetFailurePeriod(String conf) {
+  Notification* n = SelectNotification(&this->_config, FAILURE);
+  n->period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetRunningPeriod(String conf) {
+  Notification* n = SelectNotification(&this->_config, RUNNING);
+  n->period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
+}
+
+void ConfigurationStorage::SetErrorPeriod(String conf) {
+  Notification* n = SelectNotification(&this->_config, SERVER_ERROR);
+  n->period = std::atoi(conf.c_str());
+  this->StoreConfig(&this->_config);
+}
