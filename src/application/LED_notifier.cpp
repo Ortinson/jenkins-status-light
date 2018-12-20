@@ -95,7 +95,47 @@ void LEDNotifier::Off() {
 }
 
 void LEDNotifier::Rainbow(unsigned long tim, Color color, unsigned long period) {
-    FastLED.clear(); // TODO(Ortinson): Implement
+    static unsigned long cycle_start = 0;
+
+    if (tim > cycle_start + period * 1000){
+        cycle_start = tim;
+    }
+    double cycle_position = (tim - cycle_start) / ((double) period*1000);
+
+    // RED
+    color.red = static_cast<uint8_t>(255 * this->CalculateTriangleBrightness(cycle_position));
+
+    // GREEN
+    double cycle_position_mod = cycle_position;
+    if (cycle_position_mod > (double)1/3) {
+        cycle_position_mod = cycle_position_mod - (double)1/3;
+    } else {
+        cycle_position_mod = cycle_position_mod + (double)2/3;
+    }
+    color.green = static_cast<uint8_t>(255 * this->CalculateTriangleBrightness(cycle_position_mod));
+
+    // BLUE
+    cycle_position_mod = cycle_position;
+    if (cycle_position_mod < (double)2/3) {
+        cycle_position_mod = cycle_position_mod + (double)1/3;
+    } else {
+        cycle_position_mod = cycle_position_mod - (double)2/3;
+    }
+    color.blue = static_cast<uint8_t>(255 * this->CalculateTriangleBrightness(cycle_position_mod));
+
+    this->ShowColor(color);
+}
+
+double LEDNotifier::CalculateTriangleBrightness(double cycle_position) {
+    double val = 1;
+    if (cycle_position < ((double)1/3)) {
+        val = cycle_position * 3;
+    } else if (cycle_position > ((double)2/3)) {
+        val = 0;
+    } else {
+        val = 1 - (cycle_position - (double)1/3) * 3;
+    }
+    return val;
 }
 
 void LEDNotifier::ShowColor(Color color) {

@@ -24,6 +24,7 @@ private:
   void ShowColor(Color color);
   void ShowColor(uint8_t r, uint8_t g, uint8_t b);
   void BindAnimation(animation_t animation);
+  static double CalculateTriangleBrightness(double cycle_position);
 
   unsigned char _data_pin;
   size_t _led_number = NUM_LED;

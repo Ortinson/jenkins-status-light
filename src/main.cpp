@@ -8,6 +8,7 @@
 // #include <ESP8266WebServer.h>
 // #include <WiFiManager.h>         //https://github.com/tzapu/WiFiManager
 
+// TODO(Ortinson): Implement night time (NTP + configurable time from web interface)
 #include "application/configuration_storage.h"
 #include "application/configuration_server.h"
 #include "application/jenkins_monitor.h"
@@ -18,7 +19,7 @@ ConfigurationServer* server;
 JenkinsMonitor* monitor;
 LEDNotifier* notifier;
 
-Scheduler scheduler; 
+Scheduler scheduler;
 
 void setup() {
     Serial.begin(9600);
