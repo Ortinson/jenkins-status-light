@@ -1,0 +1,3 @@
+[submodule "src/submodules/ESPAsyncWebServer"]
+	path = src/submodules/ESPAsyncWebServer
+	url = git@github.com:Ortinson/ESPAsyncWebServer.git
