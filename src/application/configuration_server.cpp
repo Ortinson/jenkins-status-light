@@ -11,9 +11,9 @@ ConfigurationServer::ConfigurationServer(ConfigurationStorage* storage)
 
 void ConfigurationServer::setURIS() {
   this->_server->serveStatic("/style.css", SPIFFS, "/style.css").setDefaultFile("index.html");  // This works
-  this->_server->on("/", HTTP_GET, std::bind(&ConfigurationServer::SendIndex, this, std::placeholders::_1));
+  this->_server->on("/", AWS_HTTP_GET, std::bind(&ConfigurationServer::SendIndex, this, std::placeholders::_1));
 
-  this->_server->on("/", HTTP_POST, std::bind(&ConfigurationServer::UpdateConfig, this, std::placeholders::_1));
+  this->_server->on("/", AWS_HTTP_POST, std::bind(&ConfigurationServer::UpdateConfig, this, std::placeholders::_1));
 }
 
 void ConfigurationServer::SendIndex(AsyncWebServerRequest *request){

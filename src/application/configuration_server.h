@@ -1,7 +1,7 @@
 #ifndef APPLICATION_CONFIGURATION_SERVER_H_
 #define APPLICATION_CONFIGURATION_SERVER_H_
 
-#include <ESPAsyncWebServer.h>  // https://github.com/me-no-dev/ESPAsyncWebServer
+#include "../submodules/ESPAsyncWebServer/src/ESPAsyncWebServer.h"  // https://github.com/me-no-dev/ESPAsyncWebServer
 #include <SPIFFSEditor.h>
 
 #include "configuration_storage.h"
@@ -17,7 +17,7 @@ private:
   ConfigurationStorage* _storage;
   lamp_config_t* _config;
   AsyncWebServer* _server;
-  
+
   void SendIndex(AsyncWebServerRequest *request);
   void UpdateConfig(AsyncWebServerRequest *request);
   String MakeSelectList(jenkins_status_t status);
