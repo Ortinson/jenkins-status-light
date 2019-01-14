@@ -13,7 +13,9 @@ JenkinsMonitor::JenkinsMonitor(ConfigurationStorage* config_storage, LEDNotifier
 }
 
 void JenkinsMonitor::OnConfigUpdate(){
-  Serial.println("Monitor callback called!!!!");
+  #ifdef DEBUG
+    Serial.println("Monitor callback called!!!!");
+  #endif
   this->_t1->setInterval(_config->monitor_period * 1000);
   this->_t1->forceNextIteration();
 }
@@ -28,7 +30,9 @@ jenkins_status_t JenkinsMonitor::GetJenkinsStatus() {
   this->_http.setAuthorization(this->_config->jenkins_user, this->_config->jenkins_password);
 
   int httpCode = this->_http.GET();
-  Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  #ifdef DEBUG
+    Serial.printf("[HTTP] GET... code: %d\n", httpCode);
+  #endif
   if (httpCode != HTTP_CODE_OK) {
     this->_http.end();
     return SERVER_ERROR;
@@ -52,13 +56,10 @@ jenkins_status_t JenkinsMonitor::ParseResponse(const String response){
   String building = root["building"].as<String>();
   String result = root["result"].as<String>();
   if (building == "true"){
-    Serial.println("  Build is running.");
     return RUNNING;
   }else if (result == "SUCCESS") {
-    Serial.println("  Build Successful.");
     return SUCCESS;
   }else if (result == "FAILURE") {
-    Serial.println("  Build failed.");
     return FAILURE;
   }
   return SERVER_ERROR;

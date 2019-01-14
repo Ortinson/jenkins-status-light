@@ -22,9 +22,11 @@ void ConfigurationServer::SendIndex(AsyncWebServerRequest *request){
 
 void ConfigurationServer::UpdateConfig(AsyncWebServerRequest *request){
   int args = request->args();
-  for(int i=0;i<args;i++){
-    Serial.printf("ARG[%s]: %s\n", request->argName(i).c_str(), request->arg(i).c_str());
-  }
+  #ifdef DEBUG
+    for(int i=0;i<args;i++){
+      Serial.printf("ARG[%s]: %s\n", request->argName(i).c_str(), request->arg(i).c_str());
+    }
+  #endif
 
   String param;
   if (request->hasParam("dev_name", true)) {
