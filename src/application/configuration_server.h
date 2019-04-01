@@ -2,7 +2,6 @@
 #define APPLICATION_CONFIGURATION_SERVER_H_
 
 #include "../submodules/ESPAsyncWebServer/src/ESPAsyncWebServer.h"  // https://github.com/me-no-dev/ESPAsyncWebServer
-#include <SPIFFSEditor.h>
 
 #include "configuration_storage.h"
 #include "common/lamp_config.h"
