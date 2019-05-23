@@ -36,10 +36,10 @@ The device differentiates 4 different cases, wich are:
 - Error: Device could not fetch the status of the Pipeline.
 
 You can also configure the colour and animations for each of the states. The available animations are the following.
-| ON          | OFF         | Flash | Pulse | Rainbow|
-| ----------- | ----------- | ----- | ----- | ------ |
-|       |        |       |       |        |
 
+| ON | OFF | Flash | Pulse | Rainbow |
+| --- | --- | --- | --- | --- |
+| ![Alt Text](documentation/on.jpg) | ![Alt Text](documentation/off.jpg) | ![Alt Text](documentation/flash.gif) | ![Alt Text](documentation/pulse.gif) | ![Alt Text](documentation/rainbow.gif) |
 
 ## Build your own
 It is quite an easy process to make your own light.
